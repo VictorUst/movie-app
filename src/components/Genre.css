@@ -1,0 +1,13 @@
+.genre {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.genre li {
+  margin-right: 6px;
+  padding: 2px;
+ outline: 1px solid;
+ box-shadow: 2px 1px burlywood;
+ border-radius: 3px;
+}

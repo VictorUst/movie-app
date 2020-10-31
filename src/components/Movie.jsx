@@ -1,41 +1,59 @@
-import React from 'react';
-import './Movie.css';
+import React from "react";
+import "./Movie.css";
+import { Rate as Stars } from "antd";
 import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Genre from "./Genre";
+import Rate from "./Rate";
+import MovieSearch from "./MovieSearch";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 
-const Movie = ({ title, poster_path: poster, overview,  release_date: date }) => {
-return (
-<li className="movie-card">
-  <div className="movie-card__poster-container">
-    <img src={IMG_API + poster} alt="poster" className="movie-card__poster" />
-  </div>
+const Movie = ({ data, session }) => {
+  const elements = data.map((item) => {
+    const onHandlerStars = async (stars) => {
+      await new MovieSearch().postRate(item.id, stars, session);
+    };
 
-  <div className="movie-card__info-container">
-    <div className="movie-card__header">
-      <h1 className="movie-card__title">{title}</h1>
-    </div>
-    <div className="movie-card__release-date">{format(new Date(date), 'PP')}</div>
-    <div className="movie-card__genre-list">Action</div>
-    <div className="movie-card__description">{overview}</div>
-  </div>
-</li>
-  );
+    return (
+      <li key={item.id} className="movie-card">
+        <div className="movie-card__poster-container">
+          <img
+              alt={item.title}
+              src={IMG_API + item.poster}
+              className="movie-card__img"
+            />
+        </div>
+
+        <div className="movie-card__info-container">
+          <header className="movie-card__header">
+            <h1> {item.title}</h1>
+            <Rate rate={item.rate} />
+          </header>
+          <div className="movie-card__date">{format(new Date(item.date), 'PP')}</div>
+          <div className="movie-card__genre-list">
+            <Genre id={item.genre} />
+          </div>
+          <div className="movie-card__description">{item.desk}</div>
+
+          <div className="movie-card__stars">
+            <Stars
+              count={9}
+              defaultValue={item.rate}
+              onChange={(stars) => {
+                onHandlerStars(stars);
+              }}
+            />
+          </div>
+        </div>
+      </li>
+    );
+  });
+  return <> {elements} </>;
 }
-
 Movie.propTypes = {
-  title: PropTypes.string,
-  poster_path: PropTypes.string,
-  overview: PropTypes.string,
-  release_date: PropTypes.string,
+  data: PropTypes.arrayOf(PropTypes.object),
+  session: PropTypes.string
 };
-
-Movie.defaultProps = {
-  title: '',
-  poster_path: '',
-  overview: '',
-  release_date: '',
-};
-
 export default Movie;
+

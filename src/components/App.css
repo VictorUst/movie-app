@@ -1,8 +1,8 @@
-.movie-list {
+.main {
+  padding: 16px;
+  max-width: 1440px;
+  margin: auto;
   display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  padding: 0;
-  justify-content: space-between;
-  margin: 16px 0;
+  flex-direction: column;
+  background-color: white;
 }
