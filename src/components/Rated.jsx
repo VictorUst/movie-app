@@ -7,7 +7,7 @@ import { GenreProvider } from "./GenreContext";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 
-const Tab2 = ({ genres, rated, loading, isError }) => {
+const Rated = ({ genres, rated, loading, isError }) => {
   const elements = rated.map((item) => {
 
       return (
@@ -46,8 +46,8 @@ const Tab2 = ({ genres, rated, loading, isError }) => {
 
   return <ul className="movie-list">{elements} </ul>;
 }
-Tab2.defaultProps = {
+Rated.defaultProps = {
   rated: [],
 };
 
-export default Tab2;
+export default Rated;

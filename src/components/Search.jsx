@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DebounceInput } from "react-debounce-input";
+import { Input } from "antd";
 import Pagination from "./Pagination";
 import {GenreProvider} from './GenreContext';
 import MovieList from './MovieList';
-import './Tab1.css';
+import './Search.css';
 
-const Tab1 = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalResults,numberPages,nextPage,currentPage,rateFilms,session}) => {
+const Search = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalResults,numberPages,nextPage,currentPage,rateMovies,session}) => {
     return <>
     <div className='search'>
-      <DebounceInput
-        minLength={1}
-        debounceTimeout={100}
+      <Input
         onChange={onChangeHandler}
         value={value}
         placeholder='Type to search...'
@@ -24,7 +22,7 @@ const Tab1 = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalRe
         loading={loading}
         onClose={onClose}
         isError={isError}
-        rateFilms={rateFilms}
+        rateMovies={rateMovies}
         session={session}
       />
     </GenreProvider>
@@ -40,7 +38,7 @@ const Tab1 = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalRe
   ) : null}
   </>
 }
-Tab1.propTypes = {
+Search.propTypes = {
   onChangeHandler: PropTypes.func,
   value: PropTypes.string,
   genres: PropTypes.arrayOf(PropTypes.object),
@@ -52,8 +50,8 @@ Tab1.propTypes = {
   numberPages: PropTypes.number,
   nextPage: PropTypes.number,
   currentPage: PropTypes.number,
-  rateFilms: PropTypes.func,
+  rateMovies: PropTypes.func,
   session: PropTypes.func
 }
 
-export default Tab1;
+export default Search;

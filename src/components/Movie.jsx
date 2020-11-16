@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import PropTypes from "prop-types";
 import Genre from "./Genre";
 import Rate from "./Rate";
-import MovieSearch from "./MovieSearch";
+import MovieSearch from "../service/MovieSearch";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 
@@ -30,7 +30,7 @@ const Movie = ({ data, session }) => {
             <h1> {item.title}</h1>
             <Rate rate={item.rate} />
           </header>
-          <div className="movie-card__date">{format(new Date(item.date), 'PP')}</div>
+          <div className="movie-card__date">{item.date === '' || item.date === undefined ? 'Date unknown' : format(new Date(item.date), 'PP')}</div>
           <div className="movie-card__genre-list">
             <Genre id={item.genre} />
           </div>

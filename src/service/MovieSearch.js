@@ -3,14 +3,13 @@ class MovieSearch {
 
   api_key = "14e07f5433820211ce3badd22147847a";
 
-  async getResourse(url1, url2, url3) {
+  async getResourse(url, parameter, pageNumber) {
     const res = await fetch(
-      `${this._baseUrl}${url1}?api_key=${this.api_key}&${url2}&${url3}`
+      `${this._baseUrl}${url}?api_key=${this.api_key}&${parameter}&${pageNumber}`
     );
     if (!res.ok) {
       throw new Error(`Movies not found , received ${res.status} `);
     }
-    const path=  `${this._baseUrl}${url1}?api_key=${this.api_key}&${url2}&${url3}`;
     const body = await res.json();
     return body;
   }
@@ -27,8 +26,8 @@ class MovieSearch {
     return this.getResourse("/authentication/guest_session/new");
   }
 
-  async getRatedFilms(guest_session_id) {
-    return this.getResourse(`/guest_session/${guest_session_id}/rated/movies`,'language=en-US','sort_by=created_at.asc');
+  async getRatedMovies(guest_session_id) {
+    return this.getResourse(`/guest_session/${guest_session_id}/rated/movies`,'language=en-US&sort_by=created_at.asc');
   }
 
   async postRate(movie_id,stars,session) {

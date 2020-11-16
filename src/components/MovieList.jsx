@@ -1,15 +1,13 @@
 import React from "react";
 import "./MovieList.css";
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Error from './Error';
 
+
 const MovieList = ({ data, loading, isError, onClose ,rateFilms,session}) => {
-  let classNames = "movie-list";
-  if (loading) {
-    classNames += " loader";
-  }
   return (
-    <ul className={classNames}>
+    <ul className={cn("movie-list", { loader: loading })}>
       <Error
         loading={loading}
         isError={isError}

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Tabs } from "antd";
-import Tab1 from "./Tab1";
-import Tab2 from "./Tab2";
-import MovieSearch from "./MovieSearch";
+import { debounce } from 'lodash';
+import Search from "./Search";
+import Rated from "./Rated";
+
+import MovieSearch from "../service/MovieSearch";
 import "./App.css";
 import "antd/dist/antd.css";
 
@@ -18,102 +20,82 @@ export default class App extends Component {
     rated: [],
   };
 
+movieSearch = new MovieSearch();
+
   componentDidMount() {
-    new MovieSearch().getGenres().then((res) => {
+    this.movieSearch.getGenres().then((res) => {
       this.setState({ genres: res.genres });
     });
-    new MovieSearch().getSession().then((res) => {
+    this.movieSearch.getSession().then((res) => {
       this.setState({guest_session_id: res.guest_session_id})
     });
   }
 
-  nextPage = (pageNumber) => {
-    const { value } = this.state;
+  getMovies = debounce((value, pageNumber) => {
+    this.setState({
+      loading: true,
+      data: null,
+      totalResults: null,
+      currentPage: null,
+    });
     if (value) {
-      new MovieSearch()
-        .getMovie(value, pageNumber)
-        .then((body) => {
-          const needArr = body.results;
-          const newData = needArr.map((item) => {
-            return this.createItem(
-              item.id,
-              item.original_title,
-              item.release_date,
-              item.genre_ids,
-              item.overview,
-              item.vote_count,
-              item.vote_average,
-              item.poster_path
-            );
-          });
+      this.movieSearch.getMovie(value, pageNumber).then((body) => {
+        const movies = body.results;
+        const newData = movies.map((item) => {
+          return this.createItem(
+            item.id,
+            item.original_title,
+            item.release_date,
+            item.genre_ids,
+            item.overview,
+            item.vote_count,
+            item.vote_average,
+            item.poster_path
+          );
+        });
 
-          this.setState(() => {
-            return {
-              data: newData,
-              loading: false,
-              currentPage: pageNumber,
-            };
-          });
-          if (newData.length === 0) {
-            throw new Error("Not Found");
-          }
-        })
-        .catch(this.onError);
+        this.setState(() => {
+          return {
+            data: newData,
+            loading: false,
+            totalResults: body.total_results,
+            currentPage: pageNumber,
+          };
+        });
+        if (newData.length === 0) {
+          throw new Error("Not Found");
+        }
+      })
+      .catch(this.onError);
     } else {
       this.setState({ data: [], loading: false });
     }
+  }, 500);
+
+  nextPage = (pageNumber) => {
+    const { value } = this.state;
+    this.getMovies(value, pageNumber);
+  };
+
+  onChangeHandler = (e) => {
+    this.setState({ value: e.target.value });
+    const { value } = this.state;
+    this.getMovies(value);
   };
 
   onClose = () => {
     this.setState({ value: "", isError: false });
   };
 
-  rateFilms = (item) => {
-    item.then(res => {
+  rateMovies = () => {
+    const { guest_session_id } = this.state;
+    this.movieSearch.getRatedMovies(guest_session_id).then(res => {
       this.setState({rated: res.results})
     })
   }
 
  onError = () => {
     this.setState({ isError: true });
-  };
-
-  onChangeHandler = (e) => {
-    this.setState({ value: e.target.value });
-    const { value } = this.state;
-    this.setState({ loading: true });
-    if (value) {
-      new MovieSearch()
-        .getMovie(value)
-        .then((body) => {
-          const needArr = body.results;
-          const newData = needArr.map((item) => {
-            return this.createItem(
-              item.id,
-              item.original_title,
-              item.release_date,
-              item.genre_ids,
-              item.overview,
-              item.vote_count,
-              item.vote_average,
-              item.poster_path
-            );
-          });
-          this.setState(() => {
-            return {
-              data: newData,
-              loading: false,
-              totalResults: body.total_results,
-            };
-          });
-          if (newData.length === 0) {
-            throw new Error("Not Found");
-          }
-        })
-        .catch(this.onError);
-    } else {
-      this.setState({ data: [], loading: false });
-    }
   };
 
   createItem(id, title, date, genre, desk, stars, rate, poster) {
@@ -147,7 +129,7 @@ export default class App extends Component {
       <div className="main">
         <Tabs centered defaultActiveKey="1">
           <TabPane tab={<span>Search</span>} key="1">
-            <Tab1
+            <Search
               onChangeHandler={this.onChangeHandler}
               value={value}
               genres={genres}
@@ -159,12 +141,12 @@ export default class App extends Component {
               numberPages={numberPages}
               nextPage={this.nextPage}
               currentPage={currentPage}
-              rateFilms={this.rateFilms}
+              rateMovies={this.rateMovies}
               session={guest_session_id}
             />
           </TabPane>
-          <TabPane tab={<span onClick={()=> this.rateFilms(new MovieSearch().getRatedFilms(guest_session_id))}>Rated</span>}  key="2">
-            <Tab2
+          <TabPane tab={<span onClick={this.rateMovies}>Rated</span>}  key="2">
+            <Rated
               genres={genres}
               rated={rated}
               loading={loading}
