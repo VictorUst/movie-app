@@ -8,7 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.6.5",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -20,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prod": "cross-env NODE_ENV=production webpack",
+    "dev": "cross-env NODE_ENV=development webpack"
   },
   "eslintConfig": {
     "extends": "react-app"

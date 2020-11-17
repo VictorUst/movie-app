@@ -1,11 +1,11 @@
 class MovieSearch {
-  _baseUrl = "https://api.themoviedb.org/3";
+  baseUrl = "https://api.themoviedb.org/3";
 
-  api_key = "14e07f5433820211ce3badd22147847a";
+  apiKey = '14e07f5433820211ce3badd22147847a';
 
   async getResourse(url, parameter, pageNumber) {
     const res = await fetch(
-      `${this._baseUrl}${url}?api_key=${this.api_key}&${parameter}&${pageNumber}`
+      `${this.baseUrl}${url}?api_key=${this.apiKey}&${parameter}&${pageNumber}`
     );
     if (!res.ok) {
       throw new Error(`Movies not found , received ${res.status} `);
@@ -31,8 +31,8 @@ class MovieSearch {
   }
 
   async postRate(movie_id,stars,session) {
-    const res = await fetch(
-      `${this._baseUrl}/movie/${movie_id}/rating?api_key=${this.api_key}&guest_session_id=${session}`,
+    await fetch(
+      `${this.baseUrl}/movie/${movie_id}/rating?api_key=${this.apiKey}&guest_session_id=${session}`,
       {
         method: "POST",
         headers: {
