@@ -3,9 +3,9 @@ import "./Movie.css";
 import { Rate as Stars } from "antd";
 import { format } from 'date-fns';
 import PropTypes from "prop-types";
-import Genre from "./Genre";
-import Rate from "./Rate";
-import MovieSearch from "../service/MovieSearch";
+import Genre from "../Genre/Genre";
+import Rate from "../Rate/Rate";
+import MovieSearch from "../../service/MovieSearch";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 

@@ -26,25 +26,25 @@ class MovieSearch {
     return this.getResourse("/authentication/guest_session/new");
   }
 
-  async getRatedMovies(guest_session_id) {
-    return this.getResourse(`/guest_session/${guest_session_id}/rated/movies`,'language=en-US&sort_by=created_at.asc');
+  async getRatedMovies(guestSessionId) {
+    return this.getResourse(`/guest_session/${guestSessionId}/rated/movies`,'language=en-US&sort_by=created_at.asc');
   }
 
-  async postRate(movie_id,stars,session) {
+  async postRate(movieId,stars,session) {
     await fetch(
-      `${this.baseUrl}/movie/${movie_id}/rating?api_key=${this.apiKey}&guest_session_id=${session}`,
+      `${this.baseUrl}/movie/${movieId}/rating?api_key=${this.apiKey}&guest_session_id=${session}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
-         
         },
         body: JSON.stringify({
           "value": stars
         })
       }
     );
-   
   }
 }
-export default MovieSearch;
+
+const movieSearch = new MovieSearch();
+export default movieSearch;

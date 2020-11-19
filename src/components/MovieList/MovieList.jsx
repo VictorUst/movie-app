@@ -2,7 +2,7 @@ import React from "react";
 import "./MovieList.css";
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Error from './Error';
+import Error from '../Error/Error';
 
 
 const MovieList = ({ data, loading, isError, onClose ,rateFilms,session}) => {

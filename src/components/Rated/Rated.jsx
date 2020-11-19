@@ -1,9 +1,9 @@
 import React from "react";
 import { Rate as Stars } from "antd";
 import { format } from 'date-fns';
-import Genre from "./Genre";
-import Rate from "./Rate";
-import { GenreProvider } from "./GenreContext";
+import Genre from "../Genre/Genre";
+import Rate from "../Rate/Rate";
+import { GenreProvider } from "../GenreContext/GenreContext";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from "antd";
-import Pagination from "./Pagination";
-import {GenreProvider} from './GenreContext';
-import MovieList from './MovieList';
+import Pagination from "../Pagination/Pagination";
+import {GenreProvider} from '../GenreContext/GenreContext';
+import MovieList from '../MovieList/MovieList';
 import './Search.css';
 
 const Search = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalResults,numberPages,nextPage,currentPage,rateMovies,session}) => {

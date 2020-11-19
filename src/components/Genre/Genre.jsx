@@ -1,7 +1,8 @@
 import React from "react";
-import { GenreConsumer } from "./GenreContext";
-import "./Genre.css";
 import PropTypes from "prop-types";
+import { GenreConsumer } from "../GenreContext/GenreContext";
+import "./Genre.css";
+
 
 const Genre = ({ id }) => {
   return (

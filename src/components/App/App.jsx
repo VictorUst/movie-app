@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Tabs } from "antd";
+import { Tabs, Spin } from "antd";
 import { debounce } from 'lodash';
-import Search from "./Search";
-import Rated from "./Rated";
-
-import MovieSearch from "../service/MovieSearch";
+import Search from "../Search/Search";
+import Rated from "../Rated/Rated";
+import movieSearch from "../../service/MovieSearch";
 import "./App.css";
 import "antd/dist/antd.css";
 
@@ -18,17 +17,17 @@ export default class App extends Component {
     totalResults: 0,
     currentPage: 1,
     rated: [],
+    isFirstLoading: true,
   };
 
-movieSearch = new MovieSearch();
-
   componentDidMount() {
-    this.movieSearch.getGenres().then((res) => {
+    movieSearch.getGenres().then((res) => {
       this.setState({ genres: res.genres });
     });
-    this.movieSearch.getSession().then((res) => {
-      this.setState({guest_session_id: res.guest_session_id})
+    movieSearch.getSession().then((res) => {
+      this.setState({guestSessionId: res.guest_session_id})
     });
+    setTimeout(() => this.setState({ isFirstLoading: false }), 1000);
   }
 
   getMovies = debounce((value, pageNumber) => {
@@ -39,7 +38,7 @@ movieSearch = new MovieSearch();
       currentPage: null,
     });
     if (value) {
-      this.movieSearch.getMovie(value, pageNumber).then((body) => {
+      movieSearch.getMovie(value, pageNumber).then((body) => {
         const movies = body.results;
         const newData = movies.map((item) => {
           return this.createItem(
@@ -78,7 +77,7 @@ movieSearch = new MovieSearch();
   };
 
   onChangeHandler = (e) => {
-    this.setState({ value: e.target.value });
+    this.setState({ value: e.target.value, isError: false });
     const { value } = this.state;
     this.getMovies(value);
   };
@@ -88,8 +87,8 @@ movieSearch = new MovieSearch();
   };
 
   rateMovies = () => {
-    const { guest_session_id } = this.state;
-    this.movieSearch.getRatedMovies(guest_session_id).then(res => {
+    const { guestSessionId } = this.state;
+    movieSearch.getRatedMovies(guestSessionId).then(res => {
       this.setState({rated: res.results})
     })
   }
@@ -121,9 +120,14 @@ movieSearch = new MovieSearch();
       currentPage,
       genres,
       rated,
-      guest_session_id
+      guestSessionId,
+      isFirstLoading
     } = this.state;
-    
+
+    if (isFirstLoading) {
+      return <Spin className="spin" size="large" />;
+    }
+
     const numberPages = Math.floor(totalResults / 20);
     return (
       <div className="main">
@@ -142,7 +146,7 @@ movieSearch = new MovieSearch();
               nextPage={this.nextPage}
               currentPage={currentPage}
               rateMovies={this.rateMovies}
-              session={guest_session_id}
+              session={guestSessionId}
             />
           </TabPane>
           <TabPane tab={<span onClick={this.rateMovies}>Rated</span>}  key="2">
