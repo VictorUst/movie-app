@@ -5,14 +5,14 @@ import { format } from 'date-fns';
 import PropTypes from "prop-types";
 import Genre from "../Genre/Genre";
 import Rate from "../Rate/Rate";
-import MovieSearch from "../../service/MovieSearch";
+import movieSearch from "../../service/MovieSearch";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 
 const Movie = ({ data, session }) => {
   const elements = data.map((item) => {
     const onHandlerStars = async (stars) => {
-      await new MovieSearch().postRate(item.id, stars, session);
+      await movieSearch.postRate(item.id, stars, session);
     };
 
     return (
@@ -56,4 +56,3 @@ Movie.propTypes = {
   session: PropTypes.string
 };
 export default Movie;
-

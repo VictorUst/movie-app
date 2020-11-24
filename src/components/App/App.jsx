@@ -77,10 +77,11 @@ export default class App extends Component {
   };
 
   onChangeHandler = (e) => {
-    this.setState({ value: e.target.value, isError: false });
-    const { value } = this.state;
+    const { value } = e.target;
+    this.setState({ value, isError: false });
     this.getMovies(value);
   };
+
 
   onClose = () => {
     this.setState({ value: "", isError: false });

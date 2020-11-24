@@ -15,8 +15,8 @@ const Genre = ({ id }) => {
         });
         const genresStr = genresArr
           .filter((el) => el !== undefined)
-          .map((el, i) => {
-            return <li key={i}>{el}</li>;
+          .map((el) => {
+            return <li>{el}</li>;
           });
 
         return (
