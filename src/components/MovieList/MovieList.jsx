@@ -5,7 +5,7 @@ import cn from 'classnames';
 import Error from '../Error/Error';
 
 
-const MovieList = ({ data, loading, isError, onClose ,rateFilms,session}) => {
+const MovieList = ({ data, loading, isError, onClose ,rateMovies,session}) => {
   return (
     <ul className={cn("movie-list", { loader: loading })}>
       <Error
@@ -13,7 +13,7 @@ const MovieList = ({ data, loading, isError, onClose ,rateFilms,session}) => {
         isError={isError}
         onClose={onClose}
         data={data}
-        rateFilms={rateFilms}
+        rateMovies={rateMovies}
         session={session}
       />
     </ul>
@@ -24,7 +24,7 @@ MovieList.propTypes = {
   loading: PropTypes.bool,
   isError: PropTypes.bool,
   onClose : PropTypes.func,
-  rateFilms: PropTypes.func,
+  rateMovies: PropTypes.func,
   session: PropTypes.string
 }
 export default MovieList;

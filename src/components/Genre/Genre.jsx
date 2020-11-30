@@ -4,7 +4,7 @@ import { GenreConsumer } from "../GenreContext/GenreContext";
 import "./Genre.css";
 
 
-const Genre = ({ id }) => {
+const Genre = ({id}) => {
   return (
     <GenreConsumer>
       {(genres) => {
@@ -15,8 +15,8 @@ const Genre = ({ id }) => {
         });
         const genresStr = genresArr
           .filter((el) => el !== undefined)
-          .map((el) => {
-            return <li>{el}</li>;
+          .map((el, i) => {
+            return <li key={i}>{el}</li>;
           });
 
         return (
@@ -29,7 +29,7 @@ const Genre = ({ id }) => {
   );
 }
 Genre.propTypes = {
-  id: PropTypes.arrayOf(PropTypes.number)
+  id: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 export default Genre;

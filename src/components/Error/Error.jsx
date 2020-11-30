@@ -10,7 +10,7 @@ const Error = ({
   onClose,
   data,
   genres,
-  rateFilms,
+  rateMovies,
   session,
 }) => {
   if (loading && isError) {
@@ -52,7 +52,7 @@ const Error = ({
       <Movie
         data={data}
         genres={genres}
-        rateFilms={rateFilms}
+        rateMovies={rateMovies}
         session={session}
       />
     </>
@@ -64,7 +64,7 @@ Error.propTypes = {
   onClose: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.object),
   genres: PropTypes.arrayOf(PropTypes.object),
-  rateFilms: PropTypes.func,
+  rateMovies: PropTypes.func,
   session: PropTypes.string
 };
 export default Error;

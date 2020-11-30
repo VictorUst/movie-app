@@ -42,14 +42,14 @@ export default class App extends Component {
         const movies = body.results;
         const newData = movies.map((item) => {
           return this.createItem(
-            item.id,
+            [item.id,
             item.original_title,
             item.release_date,
             item.genre_ids,
             item.overview,
             item.vote_count,
             item.vote_average,
-            item.poster_path
+            item.poster_path]
           );
         });
 
@@ -76,8 +76,8 @@ export default class App extends Component {
     this.getMovies(value, pageNumber);
   };
 
-  onChangeHandler = (e) => {
-    const { value } = e.target;
+  onChangeHandler = (ev) => {
+    const { value } = ev.target;
     this.setState({ value, isError: false });
     this.getMovies(value);
   };
@@ -98,17 +98,8 @@ export default class App extends Component {
     this.setState({ isError: true });
   };
 
-  createItem(id, title, date, genre, desk, stars, rate, poster) {
-    return {
-      id,
-      title,
-      date,
-      genre,
-      desk,
-      stars,
-      rate,
-      poster,
-    };
+  createItem([id, title, date, genre, desk, stars, rate, poster]) {
+    return {id, title, date, genre, desk, stars, rate, poster};
   }
 
   render() {
