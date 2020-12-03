@@ -9,10 +9,10 @@ const Pagination = ({pages,currentPage,nextPage,value,loading}) => {
 }
 
 Pagination.propTypes  = {
-    pages : PropTypes.number,
-    currentPage: PropTypes.number,
-    nextPage: PropTypes.number,
-    value: PropTypes.string,
-    loading: PropTypes.bool
+    pages : PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    nextPage: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired
 }
 export default Pagination;

@@ -20,6 +20,6 @@ classNames += ' middle-grade'
   </>;
 }
 Rate.propTypes = {
-    rate: PropTypes.number
+    rate: PropTypes.number.isRequired
 }
 export default Rate;

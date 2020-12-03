@@ -6,7 +6,21 @@ import {GenreProvider} from '../GenreContext/GenreContext';
 import MovieList from '../MovieList/MovieList';
 import './Search.css';
 
-const Search = ({onChangeHandler,value,genres,data,loading,onClose,isError,totalResults,numberPages,nextPage,currentPage,rateMovies,session}) => {
+const Search = ({
+  onChangeHandler,
+  value,
+  genres,
+  data,
+  loading,
+  onClose,
+  isError,
+  totalResults,
+  numberPages,
+  nextPage,
+  currentPage,
+  rateMovies,
+  session
+  }) => {
     return <>
     <div className='search'>
       <Input
@@ -39,19 +53,19 @@ const Search = ({onChangeHandler,value,genres,data,loading,onClose,isError,total
   </>
 }
 Search.propTypes = {
-  onChangeHandler: PropTypes.func,
-  value: PropTypes.string,
-  genres: PropTypes.arrayOf(PropTypes.object),
-  data: PropTypes.arrayOf(PropTypes.object),
+  onChangeHandler: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool,
-  onClose: PropTypes.func,
-  isError: PropTypes.bool,
-  totalResults: PropTypes.number,
-  numberPages: PropTypes.number,
-  nextPage: PropTypes.number,
-  currentPage: PropTypes.number,
-  rateMovies: PropTypes.func,
-  session: PropTypes.func
+  onClose: PropTypes.func.isRequired,
+  isError: PropTypes.bool.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  numberPages: PropTypes.number.isRequired,
+  nextPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  rateMovies: PropTypes.func.isRequired,
+  session: PropTypes.func.isRequired
 }
 
 export default Search;

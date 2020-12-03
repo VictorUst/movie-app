@@ -52,7 +52,7 @@ const Movie = ({ data, session }) => {
   return <> {elements} </>;
 }
 Movie.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  session: PropTypes.string
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  session: PropTypes.string.isRequired
 };
 export default Movie;

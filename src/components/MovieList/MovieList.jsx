@@ -20,11 +20,11 @@ const MovieList = ({ data, loading, isError, onClose ,rateMovies,session}) => {
   );
 }
 MovieList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool,
-  isError: PropTypes.bool,
-  onClose : PropTypes.func,
-  rateMovies: PropTypes.func,
-  session: PropTypes.string
+  isError: PropTypes.bool.isRequired,
+  onClose : PropTypes.func.isRequired,
+  rateMovies: PropTypes.func.isRequired,
+  session: PropTypes.string.isRequired
 }
 export default MovieList;

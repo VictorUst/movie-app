@@ -40,19 +40,7 @@ export default class App extends Component {
     if (value) {
       movieSearch.getMovie(value, pageNumber).then((body) => {
         const movies = body.results;
-        const newData = movies.map((item) => {
-          return this.createItem(
-            item.id,
-            item.original_title,
-            item.release_date,
-            item.genre_ids,
-            item.overview,
-            item.vote_count,
-            item.vote_average,
-            item.poster_path
-            );
-        });
-
+        const newData = movies.map(this.createItem);
         this.setState(() => {
           return {
             data: newData,
@@ -82,6 +70,25 @@ export default class App extends Component {
     this.getMovies(value);
   };
 
+  createItem = ({
+    id,
+    title,
+    release_date: date,
+    genre_ids: genre,
+    overview: desk,
+    stars,
+    vote_average: rate,
+    poster_path: poster,
+  }) => ({
+    id,
+    title,
+    date,
+    genre,
+    desk,
+    stars,
+    rate,
+    poster
+  })
 
   onClose = () => {
     this.setState({ value: "", isError: false });
@@ -97,10 +104,6 @@ export default class App extends Component {
  onError = () => {
     this.setState({ isError: true });
   };
-
-  createItem(id, title, date, genre, desk, stars, rate, poster) {
-    return {id, title, date, genre, desk, stars, rate, poster};
-  }
 
   render() {
     const {

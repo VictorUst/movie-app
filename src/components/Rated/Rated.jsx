@@ -7,7 +7,7 @@ import { GenreProvider } from "../GenreContext/GenreContext";
 
 const IMG_API = 'https://image.tmdb.org/t/p/w1280';
 
-const Rated = ({ genres, rated, loading, isError }) => {
+const Rated = ({ genres, rated, isError }) => {
   const elements = rated.map((item) => {
 
       return (

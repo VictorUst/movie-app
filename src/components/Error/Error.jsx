@@ -24,14 +24,14 @@ const Error = ({
         />
       </>
     );
-  } 
+  }
   if (loading) {
     return (
       <>
         <Spin className='spin' size="large"/>
       </>
     );
-  } 
+  }
    if (isError) {
     return (
       <>
@@ -60,11 +60,11 @@ const Error = ({
 }
 Error.propTypes = {
   loading: PropTypes.bool,
-  isError: PropTypes.bool,
-  onClose: PropTypes.func,
-  data: PropTypes.arrayOf(PropTypes.object),
+  isError: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   genres: PropTypes.arrayOf(PropTypes.object),
-  rateMovies: PropTypes.func,
-  session: PropTypes.string
+  rateMovies: PropTypes.func.isRequired,
+  session: PropTypes.string.isRequired
 };
 export default Error;
